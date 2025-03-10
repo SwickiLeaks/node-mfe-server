@@ -1,3 +1,6 @@
+/**
+ * Copyright 2025
+ */
 import { Injectable, OnApplicationShutdown } from '@nestjs/common';
 import { CustomLoggerService } from '../core/logger/logger.service';
 

@@ -1,3 +1,6 @@
+/**
+ * Copyright 2025
+ */
 import { Injectable } from '@nestjs/common';
 import { MfeContextData } from '../template-data/template-data.model';
 
