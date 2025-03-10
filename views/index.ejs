@@ -4,9 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
   </head>
   <body>
     <h1><%= message %></h1>
     <p>Server is running on port 3000</p>
+    <p>Access Token</p>
+    <pre><code class="language-json"><%= JSON.stringify( mfeAccessToken ) %></code></pre>
+    <p>User Context Data</p>
+    <pre><code class="language-json"><%= JSON.stringify( mfeContextData.userContext ) %></code></pre>
+    <p>Auth Context Data</p>
+    <pre><code class="language-json"><%= JSON.stringify( mfeContextData.authContext ) %></code></pre>
+    <p>Request Context Data</p>
+    <pre><code class="language-json"><%= JSON.stringify( mfeContextData.requestContext ) %></code></pre>
+    <p>Login Context Data</p>
+    <pre><code class="language-json"><%= JSON.stringify( mfeContextData.loginContext ) %></code></pre>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code').forEach((block) => {
+          hljs.highlightElement(block);
+        });
+      });
+    </script>
+    <style>
+      pre code {
+        display: block; /* Ensures content is block-styled */
+        white-space: pre-wrap; /* Maintains formatting and wraps long lines */
+        word-break: break-word; /* Prevents horizontal overflow */
+        background-color: #000; /* Softer background for readability */
+        border: 1px solid #000; /* Light border for contrast */
+        border-radius: 8px; /* Rounded corners for aesthetics */
+        padding: 15px; /* Add spacing for better readability */
+        max-height: 600px; /* Optional: Limits height with scrolling */
+        overflow-y: auto; /* Enables vertical scrolling for large JSON */
+        font-family: monospace; /* Ensures consistent text style */
+      }
+    </style>
   </body>
 </html>

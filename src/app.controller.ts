@@ -1,10 +1,15 @@
 import { Controller, Get, Render } from '@nestjs/common';
-import { Observable, of } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { CustomLoggerService } from './atlas/core/logger/logger.service';
+import { TemplateData } from './template-data/template-data.model';
+import { TemplateDataService } from './template-data/template-data.service';
 
 @Controller(['*'])
 export class AppController {
-  constructor(private readonly logger: CustomLoggerService) {
+  constructor(
+    private readonly logger: CustomLoggerService,
+    private templateDataService: TemplateDataService,
+  ) {
     this.logger.setContext(AppController.name);
   }
 
@@ -13,10 +18,7 @@ export class AppController {
    */
   @Get()
   @Render('index')
-  index(): Observable<any> {
-    return of({
-      title: 'MFE Server',
-      message: 'Hello from MFE Server',
-    });
+  index(request: Request): Observable<TemplateData> {
+    return from(this.templateDataService.makeTemplateData(request));
   }
 }
