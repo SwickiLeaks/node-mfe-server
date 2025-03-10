@@ -1,0 +1,11 @@
+# Directories to ignore
+node_modules/
+dist/
+
+# Dot files to ignore
+.vscode
+.idea
+*.code-workspace
+
+# Debug files
+deps.mermaid
