@@ -26,7 +26,6 @@ WORKDIR /mfeserver
 RUN chown node:node /mfeserver
 
 # Add a non-root user for improved security
-# RUN addgroup -S appgroup && adduser -S node -G appgroup
 USER node
 
 # Copy files from build stage
@@ -39,6 +38,6 @@ COPY --from=build /mfeserver/package-lock.json /mfeserver/package.json ./
 RUN npm ci --only=production
 
 EXPOSE 3000
+
 # Start the application
-# CMD ["npm", "run", "start:prod"]
 CMD ["sh", "-c", "exec npm run start:prod"]

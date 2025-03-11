@@ -1,10 +1,10 @@
 import { Controller, Get, Render } from '@nestjs/common';
 import { Observable, from } from 'rxjs';
-import { CustomLoggerService } from './atlas/core/logger/logger.service';
+import { CustomLoggerService } from './global/core/logger/logger.service';
 import { TemplateData } from './template-data/template-data.model';
 import { TemplateDataService } from './template-data/template-data.service';
 
-@Controller(['*'])
+@Controller(['/'])
 export class AppController {
   constructor(
     private readonly logger: CustomLoggerService,

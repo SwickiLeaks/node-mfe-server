@@ -2,7 +2,7 @@
  * Copyright 2025
  */
 import { Module } from '@nestjs/common';
-import { CustomLoggerModule } from '../core/logger/logger.module';
+import { CustomLoggerModule } from '../../core/logger/logger.module';
 import { ShutdownService } from './shutdown.service';
 
 /**

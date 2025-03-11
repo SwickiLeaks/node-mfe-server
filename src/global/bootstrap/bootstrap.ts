@@ -4,11 +4,15 @@
 import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import cluster from 'cluster';
 import { json, text } from 'express';
 import { join } from 'path';
 import { HttpExceptionFilter } from '../core/exceptions/http-exception.filter';
 import { LoggingInterceptor } from '../core/interceptors/logging.interceptor';
+import { CustomLoggerService } from '../core/logger/logger.service';
 import { getAppMode, Mode } from '../utilities/getAppMode';
+
+const numCPUs = require('os').cpus().length;
 
 /**
  * The Bootstrap class is responsible for bootstrapping the application
@@ -16,6 +20,7 @@ import { getAppMode, Mode } from '../utilities/getAppMode';
  */
 export class Bootstrap {
   public mode: Mode;
+  private logger = new CustomLoggerService();
 
   /**
    * Constructor for the Bootstrap class
@@ -23,28 +28,59 @@ export class Bootstrap {
    * @param rootModule - The root module of the application
    */
   constructor(private rootModule: any) {
-    if (!rootModule) throw new Error('Unable to bootstrap app without a root module');
+    if (!rootModule) {
+      throw new Error('Unable to bootstrap app without a root module');
+    }
 
     this.mode = getAppMode();
-    if (!this.mode) throw new Error('Unable to get application mode');
+    if (!this.mode) {
+      throw new Error('Unable to get application mode');
+    }
   }
 
   /**
-   * Bootstrap and start the application
+   * Fork processes and bootstrap the application
    * @returns {Promise<void>} A promise that resolves when the application is bootstrapped
    */
   public async bootstrap(): Promise<void> {
     let app = await this.createExpressApplication();
+    this.mode === Mode.DEV ? this.configureAndStart(app) : this.clusterProcesses(app);
+  }
 
+  /**
+   * Configure middleware and start the application
+   * @returns {Promise<void>} A promise that resolves when the application is bootstrapped
+   */
+  private async configureAndStart(app: INestApplication): Promise<void> {
     app = await this.configureMiddleware(app);
     app = await this.configureStaticAssets(app as NestExpressApplication);
 
-    // if (this.mode !== Mode.PROD) {
-    //   generateDependencyGraph(app);
-    // }
-
     app.enableShutdownHooks();
     await app.listen(3000);
+  }
+
+  /**
+   * Cluster worker processes based on number of CPUs
+   * Worker processes will configure and start the application
+   * Requests will be distributed among worker processes
+   * @param app - The NestExpressApplication instance
+   */
+  private clusterProcesses(app: INestApplication): void {
+    if (cluster.isPrimary) {
+      this.logger.log(`MASTER PROCESS (${process.pid})`);
+      this.logger.log(`Number of CPUs: ${numCPUs}`);
+
+      for (let i = 0; i < numCPUs; i++) {
+        cluster.fork();
+      }
+
+      cluster.on('exit', (worker, code, signal) => {
+        this.logger.log(`Worker ${worker.process.pid} died with code: ${code}, and signal: ${signal}`);
+      });
+    } else {
+      this.logger.log(`WORKER PROCESS (${process.pid})`);
+      this.configureAndStart(app);
+    }
   }
 
   /**

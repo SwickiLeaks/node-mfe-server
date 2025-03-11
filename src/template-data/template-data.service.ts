@@ -3,7 +3,7 @@
  */
 import { Injectable } from '@nestjs/common';
 import { AppContextService } from '../app-context/app-context.service';
-import { CustomLoggerService } from '../atlas/core/logger/logger.service';
+import { CustomLoggerService } from '../global/core/logger/logger.service';
 import { TemplateData } from './template-data.model';
 
 @Injectable()
