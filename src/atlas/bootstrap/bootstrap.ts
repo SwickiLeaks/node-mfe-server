@@ -8,7 +8,6 @@ import { json, text } from 'express';
 import { join } from 'path';
 import { HttpExceptionFilter } from '../core/exceptions/http-exception.filter';
 import { LoggingInterceptor } from '../core/interceptors/logging.interceptor';
-import { generateDependencyGraph } from '../utilities/generateDependencyGraph';
 import { getAppMode, Mode } from '../utilities/getAppMode';
 
 /**
@@ -40,9 +39,9 @@ export class Bootstrap {
     app = await this.configureMiddleware(app);
     app = await this.configureStaticAssets(app as NestExpressApplication);
 
-    if (this.mode !== Mode.PROD) {
-      generateDependencyGraph(app);
-    }
+    // if (this.mode !== Mode.PROD) {
+    //   generateDependencyGraph(app);
+    // }
 
     app.enableShutdownHooks();
     await app.listen(3000);
