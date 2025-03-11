@@ -1,3 +1,6 @@
+/**
+ * Copyright 2025
+ */
 import { MfeAccessToken } from '../auth/auth.model';
 
 /**
