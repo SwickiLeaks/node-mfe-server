@@ -2,8 +2,9 @@
  * Copyright 2025
  */
 import { Module } from '@nestjs/common';
-import { AppContextService } from './app-context/app-context.service';
+import { AppContextModule } from './app-context/app-context.module';
 import { AppController } from './app.controller';
+import { AuthModule } from './auth/auth.module';
 import { ShutdownModule } from './global/bootstrap/shutdown/shutdown.module';
 import { CustomLoggerModule } from './global/core/logger/logger.module';
 import { TemplateDataService } from './template-data/template-data.service';
@@ -13,8 +14,8 @@ import { TemplateDataService } from './template-data/template-data.service';
  * @module AppModule
  */
 @Module({
-  imports: [ShutdownModule, CustomLoggerModule],
-  providers: [AppContextService, TemplateDataService],
+  imports: [AuthModule, AppContextModule, ShutdownModule, CustomLoggerModule],
+  providers: [TemplateDataService],
   controllers: [AppController],
 })
 export class AppModule {}

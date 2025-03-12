@@ -11,6 +11,7 @@ export class TemplateDataService {
   constructor(
     private readonly logger: CustomLoggerService,
     private appContextService: AppContextService,
+    // private localCacheService: LocalCacheService,
   ) {
     this.logger.setContext(TemplateDataService.name);
   }
@@ -24,6 +25,7 @@ export class TemplateDataService {
   public async makeTemplateData(request: Request): Promise<TemplateData> {
     this.logger.log('Generating template data');
     const mfeContextData = await this.appContextService.getMfeContext(request);
+    // await this.localCacheService.set(mfeContextData);
     return {
       title: 'MFE Server',
       message: 'Node Single-Spa Microfrontend Server',

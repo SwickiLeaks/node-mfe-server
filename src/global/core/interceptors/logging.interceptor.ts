@@ -25,7 +25,7 @@ export class LoggingInterceptor implements NestInterceptor {
     const contextType = context.getType(); // 'http', 'rpc', or 'ws'
     const requestUrl = context.switchToHttp().getRequest().url;
 
-    this.logger.log(`REQUEST ID [${requestId}] ${contextType} - ${requestUrl}`);
+    this.logger.log(`REQUEST ID [${requestId}] REQUEST WORKER PROCESS (${process.pid}) ${contextType} - ${requestUrl}`);
 
     return next.handle().pipe(
       tap(() => {

@@ -23,8 +23,7 @@ export class Bootstrap {
   private logger = new CustomLoggerService();
 
   /**
-   * Constructor for the Bootstrap class
-   * Will terminate if the root module is not provided or if the application mode cannot be determined
+   * Constructor for the Bootstrap class.  Will terminate if the root module is not provided or if the application mode cannot be determined
    * @param rootModule - The root module of the application
    */
   constructor(private rootModule: any) {
@@ -60,9 +59,7 @@ export class Bootstrap {
   }
 
   /**
-   * Cluster worker processes based on number of CPUs
-   * Worker processes will configure and start the application
-   * Requests will be distributed among worker processes
+   * Cluster worker processes based on number of CPUs.  Worker processes will configure and start the application.  Requests will be distributed among worker processes
    * @param app - The NestExpressApplication instance
    */
   private clusterProcesses(app: INestApplication): void {
@@ -109,7 +106,7 @@ export class Bootstrap {
   }
 
   /**
-   * Create Express Application
+   * Creates an instance of a NestJS Express Application
    * @returns {Promise<INestApplication>} The created Express application
    */
   private async createExpressApplication(): Promise<INestApplication> {
@@ -120,7 +117,7 @@ export class Bootstrap {
   }
 
   /**
-   * Configure middleware for the application
+   * Configure ALL middleware for the application.  Custom middleware, filters, interceptors and guards can be added here
    * @param {INestApplication} app - The application instance
    * @returns {Promise<INestApplication>} The application instance with configured middleware
    */
