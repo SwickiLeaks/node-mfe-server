@@ -1,16 +1,18 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
-    "esModuleInterop": true,
-    "allowJs": true,
+    "allowJs": false,
     "declaration": true,
-    "removeComments": false,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "ESNext",
+    "target": "es5",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./src"
   },
+  "target": "es5",
+  "include": ["client-side/**/*"],
   "exclude": ["node_modules", "./dist/**/*"]
 }

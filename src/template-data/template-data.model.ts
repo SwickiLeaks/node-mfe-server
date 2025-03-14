@@ -12,6 +12,15 @@ export interface TemplateData {
   mfeAccessToken: MfeAccessToken;
   domainType: string;
   mfeContextData: MfeContextData;
+  mfeConfigs: MfeConfig[];
+}
+
+/**
+ * MFE Configuration
+ */
+export interface MfeConfig {
+  name: string;
+  url: string;
 }
 
 /**

@@ -4,7 +4,7 @@ import { LocalCacheModule } from './local-cache/local-cache.module';
 import { RedisModule } from './redis/redis.module';
 
 @Module({
-  imports: [LocalCacheModule, RedisModule, NestCacheModule.register({ isGlobal: true })],
+  imports: [NestCacheModule.register({ isGlobal: true, ttl: 60 * 5, max: 1000 }), LocalCacheModule, RedisModule],
   exports: [LocalCacheModule, RedisModule],
 })
 export class CachingModule {}

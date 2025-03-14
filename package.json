@@ -7,9 +7,11 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
+    "build:client": "run-s clear:public && webpack --mode=development --config webpack.config.js",
+    "clear:public": "rm -rf public",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start -- --mode=dev",
-    "start:dev": "nest start --watch -- --mode=dev",
+    "start:dev": "npm run build:client && nest start --watch -- --mode=dev",
     "start:debug": "nest start --debug --watch -- --mode=debug",
     "start:prod": "node dist/main -- --mode=prod",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -30,6 +32,8 @@
     "nest-winston": "^1.10.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
+    "single-spa": "^6.0.3",
+    "single-spa-layout": "^3.0.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
@@ -58,7 +62,9 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.20.0"
+    "typescript-eslint": "^8.20.0",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1"
   },
   "jest": {
     "moduleFileExtensions": [

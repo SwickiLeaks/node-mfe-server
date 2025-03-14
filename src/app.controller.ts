@@ -1,9 +1,9 @@
 import { Controller, Get, Render } from '@nestjs/common';
 import { Observable, from } from 'rxjs';
+import { AuthService } from './auth/auth.service';
 import { CustomLoggerService } from './global/core/logger/logger.service';
 import { TemplateData } from './template-data/template-data.model';
 import { TemplateDataService } from './template-data/template-data.service';
-import { AuthService } from './auth/auth.service';
 
 @Controller(['*'])
 export class AppController {

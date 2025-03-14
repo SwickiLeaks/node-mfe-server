@@ -44,6 +44,7 @@ export class Bootstrap {
   public async bootstrap(): Promise<void> {
     let app = await this.createExpressApplication();
     this.mode === Mode.DEV ? this.configureAndStart(app) : this.clusterProcesses(app);
+    // this.clusterProcesses(app);
   }
 
   /**
@@ -94,8 +95,9 @@ export class Bootstrap {
     if ('useStaticAssets' in app) {
       app.useStaticAssets(staticPath, {
         setHeaders: (res) => {
-          res.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+          res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
           res.set('Pragma', 'no-cache');
+          res.set('Expires', '0');
         },
       });
       app.setBaseViewsDir(viewPath);
