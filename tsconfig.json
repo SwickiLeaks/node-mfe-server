@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
-    "allowJs": true,
+    "allowJs": false,
     "declaration": true,
     "removeComments": false,
     "emitDecoratorMetadata": true,

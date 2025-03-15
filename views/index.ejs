@@ -1,51 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- SystemJS for dynamic imports -->
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.14.1/dist/system.min.js"></script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <meta name="importmap-type" content="systemjs-importmap" />
+
     <script id="mfe-configs-json" type="application/json">
       <%= JSON.stringify(mfeConfigs) %>
     </script>
+
+    <script type="systemjs-importmap">
+      {
+        "imports": {
+          "sp-react-mfe": "http://localhost:8080/sp-react-mfe.js",
+          "vite-react-mfe": "http://localhost:3001/dist/spa.js"
+        }
+      }
+    </script>
   </head>
   <body>
-    <h1><%= message %></h1>
-    <p>Server is running on port 3000</p>
-    <p>Access Token</p>
-    <pre><code class="language-json"><%= JSON.stringify( mfeAccessToken ) %></code></pre>
-    <p>User Context Data</p>
-    <pre><code class="language-json"><%= JSON.stringify( mfeContextData.userContext ) %></code></pre>
-    <p>Auth Context Data</p>
-    <pre><code class="language-json"><%= JSON.stringify( mfeContextData.authContext ) %></code></pre>
-    <p>Request Context Data</p>
-    <pre><code class="language-json"><%= JSON.stringify( mfeContextData.requestContext ) %></code></pre>
-    <p>Login Context Data</p>
-    <pre><code class="language-json"><%= JSON.stringify( mfeContextData.loginContext ) %></code></pre>
-    <p>MFE JSON Configs</p>
-    <pre><code class="language-json"><%= JSON.stringify(mfeConfigs) %></code></pre>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('pre code').forEach((block) => {
-          hljs.highlightElement(block);
-        });
-      });
-    </script>
+    <template id="single-spa-layout" style="display: none">
+      <single-spa-router>
+        <main>
+          <route path="/webpack">
+            <application name="sp-react-mfe"></application>
+          </route>
+
+          <route path="/vite">
+            <application name="vite-react-mfe"></application>
+          </route>
+        </main>
+      </single-spa-router>
+    </template>
     <script src="/sp-main.js"></script>
-    <style>
-      pre code {
-        display: block; /* Ensures content is block-styled */
-        white-space: pre-wrap; /* Maintains formatting and wraps long lines */
-        word-break: break-word; /* Prevents horizontal overflow */
-        background-color: #000; /* Softer background for readability */
-        border: 1px solid #000; /* Light border for contrast */
-        border-radius: 8px; /* Rounded corners for aesthetics */
-        padding: 15px; /* Add spacing for better readability */
-        max-height: 600px; /* Optional: Limits height with scrolling */
-        overflow-y: auto; /* Enables vertical scrolling for large JSON */
-        font-family: monospace; /* Ensures consistent text style */
-      }
-    </style>
   </body>
 </html>

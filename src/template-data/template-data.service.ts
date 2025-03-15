@@ -27,13 +27,13 @@ export class TemplateDataService {
     this.logger.log('Generating template data');
     const mfeContextData = await this.appContextService.getMfeContext(request);
     const mfeConfigs = [
+      // {
+      //   name: 'react-mfe',
+      //   url: 'http://localhost:3001/dist/main.js',
+      // },
       {
-        name: 'react-mfe',
-        url: 'http://localhost:3001',
-      },
-      {
-        name: 'angular-mfe',
-        url: 'http://localhost:3002',
+        name: 'sp-react-mfe',
+        url: 'http://localhost:8080/react-mfe-people.js',
       },
     ];
     return {
